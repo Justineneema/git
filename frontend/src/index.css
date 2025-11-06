@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+.app-bg {
+  @apply min-h-screen bg-sky text-textDark;
+}
+
+.btn-primary {
+  @apply bg-forest hover:brightness-110 text-white px-4 py-2 rounded-md transition;
+}
+
+.card {
+  @apply bg-gray-50 rounded-xl shadow-sm p-6;
+}
+
+.input {
+  @apply w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-forest focus:border-forest px-3 py-2;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+}
+
+
