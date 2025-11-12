@@ -10,7 +10,9 @@ export default function UploadImage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
+  const [translated, setTranslated] = useState(null)
 
+  // camera activation
   useEffect(() => {
     let stream
     const start = async () => {
@@ -46,6 +48,8 @@ export default function UploadImage() {
     setLoading(true)
     setError('')
     setResult(null)
+    setTranslated(null)
+
     try {
       const form = new FormData()
       form.append('image', file)
@@ -53,6 +57,15 @@ export default function UploadImage() {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       setResult(data)
+
+      // Combine disease + treatment + analysis text to translate
+      const fullText = `
+        Disease: ${data.disease || 'Unknown'}
+        Treatment: ${data.treatment || ''}
+        Analysis: ${data.analysis || ''}
+      `
+      const translationRes = await api.post('translate/', { text: fullText, target_lang: 'rw' })
+      setTranslated(translationRes.data.translated_text)
     } catch (e) {
       const msg = e?.response?.data?.error || 'Detection failed'
       setError(msg)
@@ -83,22 +96,35 @@ export default function UploadImage() {
               </div>
             )}
           </div>
+
           <div>
             <div className="space-y-3">
               {file && (
                 <img className="rounded-lg object-cover w-full max-h-64 border" src={URL.createObjectURL(file)} alt="Preview" />
               )}
               {error && <div className="text-red-600 text-sm">{error}</div>}
-              <button className="btn-primary" disabled={loading || !file}>{loading ? 'Detecting...' : 'Run Detection'}</button>
+              <button className="btn-primary" disabled={loading || !file}>
+                {loading ? 'Detecting...' : 'Run Detection'}
+              </button>
             </div>
           </div>
         </form>
       </div>
-      <div className="mt-4">
-        <ResultCard result={result} />
+
+      <div className="mt-6 grid md:grid-cols-2 gap-4">
+        {result && (
+          <div className="p-4 border rounded-lg bg-white shadow-sm">
+            <h3 className="font-bold text-lg mb-2 text-forest">English Result</h3>
+            <ResultCard result={result} />
+          </div>
+        )}
+        {translated && (
+          <div className="p-4 border rounded-lg bg-white shadow-sm">
+            <h3 className="font-bold text-lg mb-2 text-forest">Ibisubizo mu Kinyarwanda</h3>
+            <p className="text-gray-800 whitespace-pre-wrap">{translated}</p>
+          </div>
+        )}
       </div>
     </div>
   )
 }
-
-

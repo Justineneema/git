@@ -1,6 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import Bigfarm from '../assets/Farm.jpeg';
+import farmer from '../assets/Farmer.jpeg';
 
 export default function LandingPage() {
   return (
@@ -8,7 +10,7 @@ export default function LandingPage() {
       {/* Hero with large farm image and description side-by-side */}
       <motion.section id="hero" className="card bg-white" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{duration:0.6}}>
         <div className="grid gap-6 md:grid-cols-2 items-center">
-          <img className="w-full h-80 md:h-[420px] object-cover rounded-lg" src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1400&auto=format&fit=crop" alt="Rwandan farmer with healthy crops" />
+          <img className="w-full h-80 md:h-[420px] object-cover rounded-lg" src= {Bigfarm} alt="Rwandan farmer with healthy crops" />
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-forest leading-tight">AI-Powered Crop Disease Detector</h1>
             <p className="mt-3 text-gray-700">Empowering farmers with accurate, fast, and practical crop health insights. Take a picture of a leaf or fruit to get instant diagnosis, treatment advice, and local expert support.</p>
@@ -60,7 +62,7 @@ export default function LandingPage() {
       <motion.section id="capture" className="card" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{duration:0.5}}>
         <h3 className="text-lg font-semibold text-forest">Capture and Diagnose</h3>
         <div className="mt-3 grid gap-6 md:grid-cols-2 items-center">
-          <img className="rounded-lg object-cover w-full h-72" src="https://images.unsplash.com/photo-1607196423441-5e7b22b0b4d5?q=80&w=1200&auto=format&fit=crop" alt="Farmer capturing crop with phone" />
+          <img className="rounded-lg object-cover w-full h-72" src= {farmer} alt="Farmer capturing crop with phone" />
           <p className="text-gray-700">Open the Upload page, point your camera at the affected leaf or fruit, and capture with good lighting. Our system verifies the image and returns a clear diagnosis with treatment advice and care tips.</p>
         </div>
       </motion.section>

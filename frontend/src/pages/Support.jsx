@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
+import growcrop from '../assets/Geern-grow.jpeg';
 
 const dealers = [
-  { name: 'GreenGrow Agro', district: 'Rubavu', phone: '+250 788 111 222', img: 'https://images.unsplash.com/photo-1524549100630-2e3f01b2c6dc?q=80&w=600&auto=format&fit=crop', bio: 'Certified agro-dealer supplying seeds and crop protection with farmer training.' },
+  { name: 'GreenGrow Agro', district: 'Rubavu', phone: '+250 788 111 222', img: growcrop, bio: 'Certified agro-dealer supplying seeds and crop protection with farmer training.' },
   { name: 'Harvest Hub', district: 'Huye', phone: '+250 788 333 444', img: 'https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=600&auto=format&fit=crop', bio: 'Local input shop focused on eco-friendly solutions and timely delivery.' },
   { name: 'AgriPlus', district: 'Rwamagana', phone: '+250 788 555 666', img: 'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=600&auto=format&fit=crop', bio: 'Community partner providing extension linkages and soil testing support.' },
 ]

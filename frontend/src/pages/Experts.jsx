@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Alice from '../assets/Alice.jpeg';
+import Bosco from '../assets/Bosco.jpeg';
+import Divine from '../assets/Divine.jpeg';
 
 const experts = [
-  { name: 'Alice Uwase', district: 'Kigali', phone: '+250 700 000 001', bio: 'Agronomist with 8 years in banana disease management and farmer training.', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Jean Bosco', district: 'Musanze', phone: '+250 700 000 002', bio: 'Maize pathology specialist focusing on leaf blight prevention and control.', img: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Divine Mukamana', district: 'Huye', phone: '+250 700 000 003', bio: 'Potato extension officer supporting late blight monitoring and best practices.', img: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Alice Uwase', district: 'Kigali', phone: '+250 700 000 001', bio: 'Agronomist with 8 years in banana disease management and farmer training.', img: Alice },
+  { name: 'Jean Bosco', district: 'Musanze', phone: '+250 700 000 002', bio: 'Maize pathology specialist focusing on leaf blight prevention and control.', img: Bosco },
+  { name: 'Divine Mukamana', district: 'Huye', phone: '+250 700 000 003', bio: 'Potato extension officer supporting late blight monitoring and best practices.', img: Divine },
 ]
 
 export default function Experts() {
