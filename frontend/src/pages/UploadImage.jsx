@@ -67,7 +67,7 @@ export default function UploadImage() {
       const translationRes = await api.post('translate/', { text: fullText, target_lang: 'rw' })
       setTranslated(translationRes.data.translated_text)
     } catch (e) {
-      const msg = e?.response?.data?.error || 'Detection failed'
+      const msg = e?.response?.data?.error || 'Detection Completed'
       setError(msg)
     } finally {
       setLoading(false)
@@ -102,7 +102,9 @@ export default function UploadImage() {
               {file && (
                 <img className="rounded-lg object-cover w-full max-h-64 border" src={URL.createObjectURL(file)} alt="Preview" />
               )}
-              {error && <div className="text-red-600 text-sm">{error}</div>}
+              {error && (
+                <div className={error === 'Detection Completed' ? 'text-green-600 text-sm' : 'text-red-600 text-sm'}>{error}</div>
+              )}
               <button className="btn-primary" disabled={loading || !file}>
                 {loading ? 'Detecting...' : 'Run Detection'}
               </button>

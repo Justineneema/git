@@ -1,6 +1,6 @@
 #  **AI Crop Disease Detector**
 
->  An intelligent web platform powered by **Artificial Intelligence** to detect crop diseases from images and recommend treatments — built for farmers, experts, and agro-dealers to make agriculture smarter and healthier.  
+An intelligent web platform powered by **Artificial Intelligence** to detect crop diseases from images and recommend treatments — built for farmers, experts, and agro-dealers to make agriculture smarter and healthier.  
 
 ---
 
@@ -87,6 +87,7 @@ python manage.py runserver
     │   ├── App.jsx / main.jsx
     └── package.json
 
+```
 ### 4 Requirements
 Functional
 
