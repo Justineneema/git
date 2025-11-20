@@ -1,12 +1,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import Bigfarm from '../assets/Farm.jpeg';
-import farmer from '../assets/Farmer.jpeg';
+import Bigfarm from '../assets/Umurima.webp';
+import farmer from '../assets/umuhinzi.jpg';
 
 export default function LandingPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-15">
       {/* Hero with large farm image and description side-by-side */}
       <motion.section id="hero" className="card bg-white" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{duration:0.6}}>
         <div className="grid gap-6 md:grid-cols-2 items-center">
@@ -115,5 +115,3 @@ export default function LandingPage() {
     </div>
   )
 }
-
-
