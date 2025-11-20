@@ -11,6 +11,7 @@ from .models import Disease, DetectionHistory
 from .serializers import (
     UserSerializer, RegisterSerializer, DiseaseSerializer, DetectionHistorySerializer
 )
+from .translator import translate_to_kinyarwanda
 
 from googletrans import Translator
 from PIL import Image
@@ -165,17 +166,12 @@ def ai_detect(request):
         confidence = round(random.uniform(0.7, 0.99), 2)
         disease_data = DiseaseSerializer(disease).data
 
-        def safe_translate(text):
-            try:
-                return translator.translate(text, src='en', dest='rw').text
-            except Exception:
-                return text
-
+        # Manual translation using dictionary
         translated = {
-            'name_rw': safe_translate(disease.name),
-            'description_rw': safe_translate(disease.description),
-            'treatment_rw': safe_translate(disease.treatment),
-            'care_tips_rw': safe_translate(disease.care_tips),
+            'name_rw': translate_to_kinyarwanda(disease.name),
+            'description_rw': translate_to_kinyarwanda(disease.description),
+            'treatment_rw': translate_to_kinyarwanda(disease.treatment),
+            'care_tips_rw': translate_to_kinyarwanda(disease.care_tips),
         }
 
         result = {
