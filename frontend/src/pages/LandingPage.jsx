@@ -16,7 +16,7 @@ export default function LandingPage() {
             <p className="mt-3 text-gray-700">Empowering farmers with accurate, fast, and practical crop health insights. Take a picture of a leaf or fruit to get instant diagnosis, treatment advice, and local expert support.</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link to="/upload" className="btn-primary">Start Detection</Link>
-              <Link to="/about" className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50">Learn More</Link>
+              <Link to="/about" className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50">About us</Link>
             </div>
           </div>
         </div>
@@ -24,9 +24,10 @@ export default function LandingPage() {
 
       {/* Mission */}
       <motion.section id="mission" className="card" initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{duration:0.5}}>
-        <h2 className="text-xl font-bold text-forest">Our Mission</h2>
+        <h2 className="text-xl font-bold text-forest">Mission</h2>
         <p className="mt-3 text-gray-700">
           Empowering Rwandan farmers and communities with timely, accurate, and accessible crop health information through technology.
+          Agriculture remains the backbone of Rwanda’s economy, yet many farmers continue to face significant losses due to late detection of crop diseases.
         </p>
       </motion.section>
 
@@ -41,10 +42,9 @@ export default function LandingPage() {
         <div className="card">
           <h3 className="text-lg font-semibold text-forest">Solution</h3>
           <ul className="mt-2 space-y-2 text-gray-700 list-disc list-inside">
-            <li>AI-based detection from a simple photo</li>
-            <li>User-assisted validation for credibility</li>
-            <li>Treatment recommendations (organic, chemical, cultural)</li>
-            <li>Local experts and agro-dealer info</li>
+            <p>
+          Through our platform farmers can post pictures of infected crops where AI-based detection takes place. The recommended matches can then be reviewed by the user and validated by people enhancing the accuracy of the validation. 
+        </p>
           </ul>
         </div>
       </motion.section>

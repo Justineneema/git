@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import healthyimage from '../assets/Healthy.jpeg';
+import { translateToKinyarwanda } from '../assets/kinyarwanda.js';
 
 export default function ResultCard({ result }) {
   const [showKinyarwanda, setShowKinyarwanda] = useState(false)
@@ -12,6 +13,12 @@ export default function ResultCard({ result }) {
   const healthy = result?.healthy_example
   const tips = (result?.care_tips || '').split(/\n|\.\s/).filter(Boolean)
   const translation = result?.translation || {}
+
+  // Example usage for Kinyarwanda translation:
+  const kinyarwandaName = translateToKinyarwanda(result?.predicted_disease?.name);
+  const kinyarwandaDescription = translateToKinyarwanda(result?.predicted_disease?.description);
+  const kinyarwandaTreatment = translateToKinyarwanda(result?.predicted_disease?.treatment);
+  const kinyarwandaCareTips = translateToKinyarwanda(result?.predicted_disease?.care_tips);
 
   return (
     <div className="card">
