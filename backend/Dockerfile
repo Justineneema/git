@@ -5,25 +5,29 @@ FROM python:3.11-slim
 ENV PYTHONUNBUFFERED=1
 
 # Set working directory
-WORKDIR /app
+WORKDIR /backend
 
-# Install system packages (required for psycopg2 & numpy)
+# Install system dependencies (needed for psycopg2, numpy, TensorFlow)
 RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
     python3-dev \
     build-essential \
+    git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirement file
-COPY requirements.txt /app/
+# Copy requirements file
+COPY requirements.txt .
+
+# Upgrade pip (important for TensorFlow)
+RUN pip install --upgrade pip
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the full project
-COPY . /app/
+# Copy project files
+COPY . .
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
