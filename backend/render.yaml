@@ -4,34 +4,28 @@ services:
     env: docker
     plan: free
     region: frankfurt
-
     rootDir: .
     dockerfilePath: ./Dockerfile
     autoDeploy: true
-
-    # Render will expose port 8000 automatically
     envVars:
       - key: PORT
         value: "8000"
-
       - key: DEBUG
         value: "False"
-
       - key: DJANGO_SECRET_KEY
         generateValue: true
-
       - key: DATABASE_URL
         fromDatabase:
           name: cropdetector-db
           property: connectionString
-
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
       - key: WEB_CONCURRENCY
         value: "2"
-
-    # Correct healthcheck for Django API
     healthCheckPath: "/api/health/"
 
 databases:
   - name: cropdetector-db
     databaseName: cropdetector
     plan: free
+    region: frankfurt
