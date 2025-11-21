@@ -14,8 +14,12 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     python3-dev \
     build-essential \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -31,8 +35,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
-# Collect static files (only if DJANGO_SECRET_KEY is available)
-RUN python manage.py collectstatic --noinput || echo "Skipping collectstatic"
+# Create necessary directories
+RUN mkdir -p staticfiles media
+
+# Collect static files (with error handling)
+RUN python manage.py collectstatic --noinput || echo "Skipping collectstatic - will run after deployment"
 
 # Expose Django/Gunicorn port
 EXPOSE 8000
