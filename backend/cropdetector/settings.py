@@ -21,6 +21,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+    "git-4-8zex.onrender.com",  # Your Render backend URL
 ]
 
 # Add Render hostname if it exists
@@ -153,19 +154,22 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # =====================================================
-# CORS CONFIG
+# CORS CONFIGURATION (UPDATED FOR FRONTEND)
 # =====================================================
-# For production, you should specify exact origins
 if DEBUG:
+    # Allow all origins in development
     CORS_ALLOW_ALL_ORIGINS = True
 else:
+    # Production: Allow specific frontend origins
     CORS_ALLOWED_ORIGINS = [
-        "https://your-frontend-domain.com",  # Replace with your actual frontend URL
-        # Add more origins as needed
+        "http://localhost:5173",  # Vite local dev
+        "http://localhost:3000",  # Alternative local dev
+        "https://your-frontend.vercel.app",  # Replace with your actual Vercel URL
+        "https://your-frontend.netlify.app",  # Replace with your actual Netlify URL
+        # Add more frontend URLs as needed
     ]
-    # If you want to allow all origins in production (not recommended):
-    # CORS_ALLOW_ALL_ORIGINS = True
 
+# CORS settings for credentials and headers
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
     "DELETE",
