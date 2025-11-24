@@ -26,34 +26,62 @@ function useAuth() {
   }, [user])
 
   const login = async (username, password) => {
-    const { data } = await api.post('auth/login/', { username, password })
-    const authData = { 
-      access: data.access, 
-      refresh: data.refresh, 
-      user: data.user 
+    try {
+      const { data } = await api.post('/auth/login/', { username, password })
+      const authData = { 
+        access: data.access, 
+        refresh: data.refresh, 
+        user: data.user 
+      }
+      // Set token header immediately to avoid race on first protected fetch
+      setAuthToken(authData.access)
+      localStorage.setItem('auth', JSON.stringify(authData))
+      setUser(authData)
+      return authData
+    } catch (error) {
+      console.error('Login error in useAuth:', error.response?.data)
+      throw error
     }
-    // Set token header immediately to avoid race on first protected fetch
-    setAuthToken(authData.access)
-    localStorage.setItem('auth', JSON.stringify(authData))
-    setUser(authData)
-    return authData
   }
 
   const register = async (username, password, is_expert = false) => {
-    const { data } = await api.post('auth/register/', { 
-      username, 
-      password, 
-      is_expert 
-    })
-    const authData = { 
-      access: data.access, 
-      refresh: data.refresh, 
-      user: data.user 
+    try {
+      const { data } = await api.post('/auth/register/', { 
+        username, 
+        password, 
+        is_expert 
+      })
+      const authData = { 
+        access: data.access, 
+        refresh: data.refresh, 
+        user: data.user 
+      }
+      setAuthToken(authData.access)
+      localStorage.setItem('auth', JSON.stringify(authData))
+      setUser(authData)
+      return authData
+    } catch (error) {
+      console.error('Registration error in useAuth:', error.response?.data)
+      // Extract user-friendly error message
+      const errorData = error.response?.data
+      let errorMessage = 'Registration failed'
+      
+      if (errorData?.error) {
+        errorMessage = errorData.error
+      } else if (errorData?.username) {
+        errorMessage = Array.isArray(errorData.username) ? errorData.username[0] : errorData.username
+      } else if (errorData?.email) {
+        errorMessage = Array.isArray(errorData.email) ? errorData.email[0] : errorData.email
+      } else if (typeof errorData === 'object') {
+        // Try to find any error message in the response
+        const firstError = Object.values(errorData).find(val => Array.isArray(val) && val.length > 0)
+        if (firstError) {
+          errorMessage = firstError[0]
+        }
+      }
+      
+      throw new Error(errorMessage)
     }
-    setAuthToken(authData.access)
-    localStorage.setItem('auth', JSON.stringify(authData))
-    setUser(authData)
-    return authData
   }
 
   const logout = () => {
