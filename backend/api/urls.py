@@ -1,14 +1,19 @@
 from django.urls import path, include
-from rest_framework import routers
-from .views import RegisterView, LoginView, DiseaseViewSet, DetectionHistoryViewSet, ai_detect
+from rest_framework.routers import DefaultRouter
+from . import views
 
-router = routers.DefaultRouter()
-router.register("diseases", DiseaseViewSet)
-router.register("detections", DetectionHistoryViewSet)
+router = DefaultRouter()
+router.register(r'diseases', views.DiseaseViewSet, basename='disease')
+router.register(r'history', views.DetectionHistoryViewSet, basename='history')
 
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name="register"),
-    path('login/', LoginView.as_view(), name="login"),
-    path('ai-detect/', ai_detect, name='ai_detect'),
+    # Authentication endpoints
+    path('auth/register/', views.RegisterView.as_view(), name='register'),
+    path('auth/login/', views.LoginView.as_view(), name='login'),
+    
+    # AI Detection endpoint
+    path('detect/', views.ai_detect, name='ai_detect'),
+    
+    # Include router URLs
     path('', include(router.urls)),
 ]

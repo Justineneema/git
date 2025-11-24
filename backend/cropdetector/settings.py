@@ -1,6 +1,6 @@
 """
 Django settings for cropdetector project.
-Production-ready for Render deployment using Docker.
+Production-ready for Render deployment.
 """
 
 from pathlib import Path
@@ -17,11 +17,14 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-secret-key-change-in-produ
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# Fixed ALLOWED_HOSTS to handle Render properly
+# ALLOWED_HOSTS for production
 ALLOWED_HOSTS = [
     "localhost",
-    "127.0.0.1",
-    "git-4-8zex.onrender.com",  # Your Render backend URL
+    "127.0.0.1", 
+    "git-4-8zex.onrender.com",
+    "git-git-main-justine-neemas-projects.vercel.app",
+    ".vercel.app",
+    ".onrender.com",
 ]
 
 # Add Render hostname if it exists
@@ -51,12 +54,12 @@ INSTALLED_APPS = [
 ]
 
 # =====================================================
-# MIDDLEWARE
+# MIDDLEWARE - CORS MUST BE FIRST 
 # =====================================================
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",        # MUST BE FIRST 
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",   # Required for Render static files
-    "corsheaders.middleware.CorsMiddleware",        # CORS should be high in the stack
+    "whitenoise.middleware.WhiteNoiseMiddleware",   # For static files
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -88,13 +91,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "cropdetector.wsgi.application"
 
 # =====================================================
-# DATABASE CONFIGURATION (Render uses DATABASE_URL)
+# DATABASE CONFIGURATION
 # =====================================================
-# Check if DATABASE_URL exists, otherwise use SQLite for local dev
 DATABASE_URL = os.getenv("DATABASE_URL")
-
 if DATABASE_URL:
-    # Production database (Render PostgreSQL)
     DATABASES = {
         "default": dj_database_url.config(
             default=DATABASE_URL,
@@ -103,7 +103,6 @@ if DATABASE_URL:
         )
     }
 else:
-    # Local development fallback
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -140,7 +139,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# WhiteNoise configuration
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -154,23 +152,18 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # =====================================================
-# CORS CONFIGURATION (UPDATED FOR FRONTEND)
+# CORS CONFIGURATION - UPDATED WITH YOUR ACTUAL URLS 
 # =====================================================
-if DEBUG:
-    # Allow all origins in development
-    CORS_ALLOW_ALL_ORIGINS = True
-else:
-    # Production: Allow specific frontend origins
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:5173",  # Vite local dev
-        "http://localhost:3000",  # Alternative local dev
-        "https://your-frontend.vercel.app",  # Replace with your actual Vercel URL
-        "https://your-frontend.netlify.app",  # Replace with your actual Netlify URL
-        # Add more frontend URLs as needed
-    ]
+CORS_ALLOW_ALL_ORIGINS = False
 
-# CORS settings for credentials and headers
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://git-git-main-justine-neemas-projects.vercel.app",
+]
+
 CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",
@@ -179,6 +172,7 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
+
 CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
@@ -191,6 +185,12 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    "https://git-4-8zex.onrender.com",
+    "https://git-git-main-justine-neemas-projects.vercel.app",
+]
+
 # =====================================================
 # REST FRAMEWORK CONFIGURATION
 # =====================================================
@@ -200,6 +200,11 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        "rest_framework.parsers.MultiPartParser",
+        "rest_framework.parsers.FormParser",
     ],
 }
 
@@ -214,6 +219,7 @@ SIMPLE_JWT = {
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
 
 # =====================================================
@@ -235,9 +241,8 @@ if not DEBUG:
 # =====================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# =====================================================
 # LOGGING CONFIGURATION
-# =====================================================
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
