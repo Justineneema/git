@@ -12,14 +12,38 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Basic validation
+    if (!username.trim() || !password.trim()) {
+      setError('Please enter both username and password');
+      return;
+    }
+    
     setLoading(true);
     setError('');
+    
     try {
+      console.log('Starting login process...');
       await authAPI.login(username, password);
-      const to = location.state?.from?.pathname || '/dashboard';
-      navigate(to, { replace: true });
+      
+      // Get redirect path or default to dashboard
+      const redirectPath = location.state?.from?.pathname || '/dashboard';
+      console.log('Login successful, redirecting to:', redirectPath);
+      
+      navigate(redirectPath, { replace: true });
     } catch (err) {
-      setError(err?.response?.data?.error || 'Login failed. Check your credentials.');
+      console.error('Login page error:', err);
+      
+      // Handle different error types
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else if (err.response?.data) {
+        setError(JSON.stringify(err.response.data));
+      } else if (err.message) {
+        setError(err.message);
+      } else {
+        setError('Login failed. Please check your credentials and try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -32,19 +56,59 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
             <label className="block text-sm mb-1">Username</label>
-            <input className="input" value={username} onChange={e => setUsername(e.target.value)} required />
+            <input 
+              className="input" 
+              value={username} 
+              onChange={e => setUsername(e.target.value)} 
+              required 
+              disabled={loading}
+              placeholder="Enter your username"
+            />
           </div>
           <div>
             <label className="block text-sm mb-1">Password</label>
-            <input type="password" className="input" value={password} onChange={e => setPassword(e.target.value)} required />
+            <input 
+              type="password" 
+              className="input" 
+              value={password} 
+              onChange={e => setPassword(e.target.value)} 
+              required 
+              disabled={loading}
+              placeholder="Enter your password"
+            />
           </div>
-          {error && <div className="text-red-600 text-sm">{error}</div>}
-          <button className="btn-primary w-full" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          
+          {error && (
+            <div className="text-red-600 text-sm bg-red-50 p-2 rounded">
+              {error}
+            </div>
+          )}
+          
+          <button 
+            className="btn-primary w-full" 
+            disabled={loading}
+            type="submit"
+          >
+            {loading ? (
+              <span className="flex items-center justify-center">
+                <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>
+                Logging in...
+              </span>
+            ) : (
+              'Login'
+            )}
           </button>
         </form>
-        <p className="mt-3 text-sm">
-          No account? <Link className="text-forest underline" to="/register">Register</Link>
+        
+        <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-blue-700">
+          <strong>Debug Info:</strong> API Base: {import.meta.env.VITE_API_BASE || 'https://git-4-8zex.onrender.com/api/'}
+        </div>
+        
+        <p className="mt-3 text-sm text-center">
+          No account?{' '}
+          <Link className="text-forest underline hover:text-forest-dark" to="/register">
+            Register here
+          </Link>
         </p>
       </div>
     </div>
