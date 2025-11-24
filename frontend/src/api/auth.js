@@ -3,16 +3,17 @@ import { api, setAuthToken } from './axios'
 export const authAPI = {
   login: async (username, password) => {
     try {
-      const response = await api.post('/auth/login/', { username, password })
+      // Removed leading slash to prevent double-slash in URL
+      const response = await api.post('auth/login/', { username, password })
       const { access, refresh, user } = response.data
-      
+
       // Set auth token
       setAuthToken(access)
-      
+
       // Store user data
       localStorage.setItem('auth_user', JSON.stringify(user))
       localStorage.setItem('refresh_token', refresh)
-      
+
       return response.data
     } catch (error) {
       throw error
@@ -21,20 +22,20 @@ export const authAPI = {
 
   register: async (username, password, isExpert = false) => {
     try {
-      const response = await api.post('/auth/register/', { 
+      const response = await api.post('auth/register/', { 
         username, 
         password,
         is_expert: isExpert 
       })
       const { access, refresh, user } = response.data
-      
+
       // Set auth token
       setAuthToken(access)
-      
+
       // Store user data
       localStorage.setItem('auth_user', JSON.stringify(user))
       localStorage.setItem('refresh_token', refresh)
-      
+
       return response.data
     } catch (error) {
       throw error
