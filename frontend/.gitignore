@@ -1,0 +1,10 @@
+# Environment files
+.env.local
+.env.*.local
+
+
+# Node
+node_modules
+dist
+dist-ssr
+*.local
