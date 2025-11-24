@@ -1,27 +1,21 @@
-from googletrans import Translator
-
-# Manual English to Kinyarwanda translation mapping
-EN_RW_TRANSLATIONS = {
-    "Banana Bacterial Wilt": "Indwara y’uruhumbu rw’igitoki",
-    "Bacterial disease causing wilting and yellowing.": "Indwara iterwa na bagiteri itera kugwa no guhinduka umuhondo kw’ibyatsi.",
-    "Rogue infected plants, sanitize tools, use clean planting material.": "Kurandura ibimera byanduye, gusukura ibikoresho, gukoresha imbuto zifite isuku.",
-    "Maintain field hygiene; use resistant varieties; avoid tool sharing between fields.": "Gusukura umurima, gukoresha imbuto zirwanya indwara, kwirinda gusangira ibikoresho hagati y’imirima.",
-
-    "Maize Leaf Blight": "Indwara y’icyorezo cy’ibyatsi bya mahindi",
-    "Fungal leaf spots reducing photosynthesis.": "Uduheri duterwa na bagiteri tugabanya ubushobozi bwo gukora ifumbire y’ibyatsi.",
-    "Rotate crops, remove residue, apply recommended fungicide if severe.": "Guhinduranya imyaka, gukuraho ibisigazwa, gukoresha umuti wica udukoko igihe indwara ikaze.",
-    "Ensure spacing for airflow; balanced fertilization; timely weeding.": "Gushyiraho intera ihagije y’ihingwa, gukoresha ifumbire ikwiye, kurandura ibyatsi bibi ku gihe.",
-
-    "Potato Late Blight": "Indwara y’icyorezo cya patate",
-    "Oomycete disease causing dark lesions on leaves and tubers.": "Indwara iterwa na Oomycete itera uduheri dutukura ku mababi no ku tubura.",
-    "Use certified seed, ensure airflow, apply protective fungicide as advised.": "Gukoresha imbuto zemewe, gushyiraho intera ihagije, gukoresha umuti wica udukoko nk’uko inama igirwa.",
-    "Avoid overhead irrigation late in day; remove infected leaves; monitor weather alerts.": "Kwirinda kuvomera hejuru mu masaha y’umugoroba, gukuraho amababi yanduye, gukurikirana itangazo ry’ikirere.",
-    
-}
-
 def translate_to_kinyarwanda(text):
     """
-    Returns the Kinyarwanda translation if available, otherwise returns the original English text.
-    Fill in the values above with your translations.
+    Simple translation function for Kinyarwanda.
+    In a real app, you would use a proper translation API.
     """
-    return EN_RW_TRANSLATIONS.get(text, text)
+    translations = {
+        'Banana Bacterial Wilt': 'Indwara ya Banana yo kurwara kuri Bacteria',
+        'Maize Leaf Blight': 'Indwara y\'ibimera bya Maize',
+        'Potato Late Blight': 'Indwara ya Potato yo kurwara',
+        'Bacterial disease causing wilting and yellowing.': 'Indwara ya Bacteria ishobora gutuma ibimera byumva ubucucu no kuba umuhondo.',
+        'Fungal leaf spots reducing photosynthesis.': 'Ibiranga by\'ibimera bifite amabara y\'umweru bigabanya ubwoko bw\'ibimera.',
+        'Oomycete disease causing dark lesions on leaves and tubers.': 'Indwara ya Oomycete ishobora gutuma haba amabara y\'umukara kuri ibimera n\'ibinyabutumbura.',
+        'Rogue infected plants, sanitize tools, use clean planting material.': 'Kuraho ibimera byarwaye, gukoresha ibikoresho byo gusukura, gukoresha ibyatsi byo gutera byera.',
+        'Rotate crops, remove residue, apply recommended fungicide if severe.': 'Guhindura ibihingwa, gukuraho ibisigazwa, gukoresha ifungisidi zirinzwe niba byarakaze.',
+        'Use certified seed, ensure airflow, apply protective fungicide as advised.': 'Gukoresha imbuto zemewe, kureba neza ko umwuka uhagaze, gukoresha ifungisidi zirinzwe nk\'uko byavuzwe.',
+        'Maintain field hygiene; use resistant varieties; avoid tool sharing between fields, or contact one of our expert': 'Komeza gusana isambu; gukoresha ubwoko butakwicwa; kwirinda gusangiza ibikoresho hagati y\'amasambu, cyangwa wabwira umwe mu banyabwenge.',
+        'Ensure spacing for airflow; balanced fertilization; timely weeding, or contact one of our expert': 'Kureba neza intera yo gukoresha umwuka; gukoresha ifumbire yuzuye; kubagura ibyatsi mu bihe, cyangwa wabwira umwe mu banyabwenge.',
+        'Avoid overhead irrigation late in day; remove infected leaves; monitor weather alerts, or contact one of our expert': 'Kwirinda gutera amazi mu gihe cy\'umunsi; gukuraho ibibabi byarwaye; kureba amakuru y\'ibihe, cyangwa wabwira umwe mu banyabwenge.',
+    }
+    
+    return translations.get(text, f"Translation for: {text}")
