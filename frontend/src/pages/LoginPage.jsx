@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { authAPI, setAuthToken } from '../api/axios'; // updated import
+import { authAPI } from '../api/auth';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -15,13 +15,11 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await authAPI.login(username, password);
-      const token = res.data.token; // make sure backend sends { token: '...' }
-      setAuthToken(token);
+      await authAPI.login(username, password);
       const to = location.state?.from?.pathname || '/dashboard';
       navigate(to, { replace: true });
     } catch (err) {
-      setError(err?.response?.data?.error || 'Login failed. Please check your credentials.');
+      setError(err?.response?.data?.error || 'Login failed. Check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -34,22 +32,11 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
             <label className="block text-sm mb-1">Username</label>
-            <input
-              className="input"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+            <input className="input" value={username} onChange={e => setUsername(e.target.value)} required />
           </div>
           <div>
             <label className="block text-sm mb-1">Password</label>
-            <input
-              className="input"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <input type="password" className="input" value={password} onChange={e => setPassword(e.target.value)} required />
           </div>
           {error && <div className="text-red-600 text-sm">{error}</div>}
           <button className="btn-primary w-full" disabled={loading}>

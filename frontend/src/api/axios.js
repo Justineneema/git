@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const baseURL =
-  import.meta.env.VITE_API_BASE?.replace(/\/+$/, '') + '/api/' || 
-  'https://git-4-8zex.onrender.com/api/';
+const baseURL = import.meta.env.VITE_API_BASE?.replace(/\/+$/, '') || 
+  'https://git-4-8zex.onrender.com/api';
 
 console.log('API Base URL:', baseURL);
 
@@ -23,20 +22,26 @@ export function setAuthToken(token) {
   }
 }
 
+// Load token if exists
 const token = localStorage.getItem('auth_token');
 if (token) setAuthToken(token);
 
+// Request interceptor
 api.interceptors.request.use(
   (config) => {
+    // Remove leading slash to prevent overriding baseURL
     if (config.url.startsWith('/')) config.url = config.url.slice(1);
+
     const token = localStorage.getItem('auth_token');
     if (token) config.headers.Authorization = `Bearer ${token}`;
+
     console.log(`Request: ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`);
     return config;
   },
   (error) => Promise.reject(error)
 );
 
+// Response interceptor
 api.interceptors.response.use(
   (response) => {
     console.log(`Response: ${response.config.url}`, response.status);
@@ -58,15 +63,10 @@ api.interceptors.response.use(
   }
 );
 
-// Auth helper functions
-export const authAPI = {
-  login: (username, password) => api.post('auth/login/', { username, password }),
-  register: (username, password) => api.post('auth/register/', { username, password }),
-};
-
+// Backend health check
 export const healthCheck = async () => {
   try {
-    const healthURL = baseURL.replace('/api/', '/health/');
+    const healthURL = baseURL.replace(/\/api$/, '/health');
     const response = await axios.get(healthURL, { timeout: 10000 });
     return response.data;
   } catch (error) {
