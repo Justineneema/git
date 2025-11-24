@@ -1,16 +1,15 @@
-"""
-WSGI config for cropdetector project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
-"""
-
 import os
-
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cropdetector.settings')
-
+# Standard Django WSGI setup
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cropdetector.settings")
 application = get_wsgi_application()
+
+# AUTO CREATE DATABASE TABLES (Django equivalent of db.create_all())
+try:
+    from django.core.management import call_command
+    print("🔄 Auto-migrating database...")
+    call_command("migrate", interactive=False)
+    print("✅ Database ready!")
+except Exception as e:
+    print("❌ Auto-migration failed:", e)
