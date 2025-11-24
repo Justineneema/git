@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { authAPI } from '../api/auth' // Import directly
 
-export default function RegisterPage({ auth }) {
+export default function RegisterPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isExpert, setIsExpert] = useState(false)
@@ -16,11 +17,11 @@ export default function RegisterPage({ auth }) {
     setError('')
     setSuccess('')
     try {
-      await auth.register(username, password, isExpert)
+      await authAPI.register(username, password, isExpert)
       setSuccess('Registration successful. You can login now.')
-      setTimeout(()=>navigate('/login'), 800)
+      setTimeout(() => navigate('/login'), 2000)
     } catch (err) {
-      const msg = err?.response?.data ? JSON.stringify(err.response.data) : 'Registration failed'
+      const msg = err?.response?.data?.error || 'Registration failed. Please try again.'
       setError(msg)
     } finally {
       setLoading(false)
@@ -34,23 +35,44 @@ export default function RegisterPage({ auth }) {
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
             <label className="block text-sm mb-1">Username</label>
-            <input className="input" value={username} onChange={e=>setUsername(e.target.value)} required />
+            <input 
+              className="input" 
+              value={username} 
+              onChange={e => setUsername(e.target.value)} 
+              required 
+            />
           </div>
           <div>
             <label className="block text-sm mb-1">Password</label>
-            <input className="input" type="password" value={password} onChange={e=>setPassword(e.target.value)} required />
+            <input 
+              className="input" 
+              type="password" 
+              value={password} 
+              onChange={e => setPassword(e.target.value)} 
+              required 
+            />
           </div>
           <label className="flex items-center gap-2 text-sm">
-            <input type="checkbox" checked={isExpert} onChange={e=>setIsExpert(e.target.checked)} /> Register as expert
+            <input 
+              type="checkbox" 
+              checked={isExpert} 
+              onChange={e => setIsExpert(e.target.checked)} 
+            /> 
+            Register as expert
           </label>
           {error && <div className="text-red-600 text-sm">{error}</div>}
           {success && <div className="text-green-700 text-sm">{success}</div>}
-          <button className="btn-primary w-full" disabled={loading}>{loading ? 'Creating...' : 'Create account'}</button>
+          <button 
+            className="btn-primary w-full" 
+            disabled={loading}
+          >
+            {loading ? 'Creating...' : 'Create account'}
+          </button>
         </form>
-        <p className="mt-3 text-sm">Have an account? <Link className="text-forest underline" to="/login">Login</Link></p>
+        <p className="mt-3 text-sm">
+          Have an account? <Link className="text-forest underline" to="/login">Login</Link>
+        </p>
       </div>
     </div>
   )
 }
-
-

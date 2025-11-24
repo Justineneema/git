@@ -11,7 +11,7 @@ export const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: false, // Set to false to avoid CORS issues with credentials 
+  withCredentials: false,
 })
 
 export function setAuthToken(token) {
@@ -33,6 +33,7 @@ if (token) {
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
+    console.log(`Making ${config.method?.toUpperCase()} request to: ${config.url}`)
     const token = localStorage.getItem('auth_token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -46,24 +47,24 @@ api.interceptors.request.use(
 
 // Response interceptor
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log(`Response received from: ${response.config.url}`, response.status)
+    return response
+  },
   (error) => {
+    console.error('API Error:', error.response?.data || error.message)
+    
     if (error?.response?.status === 401) {
-      // Clear auth and redirect to login
       setAuthToken(null)
       localStorage.removeItem('auth_user')
+      localStorage.removeItem('refresh_token')
       if (window.location.pathname !== '/login') {
         window.location.href = '/login'
       }
     }
     
-    // Handle network errors
     if (!error.response) {
       console.error('Network error - backend might be down')
-      // Show user-friendly message
-      if (error.config && error.config.url !== '/health/') {
-        alert('Cannot connect to server. Please check your connection and try again.')
-      }
     }
     
     return Promise.reject(error)
@@ -73,7 +74,6 @@ api.interceptors.response.use(
 // Health check function
 export const healthCheck = async () => {
   try {
-    // Remove /api from baseURL for health check
     const healthURL = baseURL.replace('/api', '') + '/health/'
     const response = await axios.get(healthURL, { timeout: 10000 })
     return response.data

@@ -19,9 +19,13 @@ export const authAPI = {
     }
   },
 
-  register: async (userData) => {
+  register: async (username, password, isExpert = false) => {
     try {
-      const response = await api.post('/auth/register/', userData)
+      const response = await api.post('/auth/register/', { 
+        username, 
+        password,
+        is_expert: isExpert 
+      })
       const { access, refresh, user } = response.data
       
       // Set auth token
