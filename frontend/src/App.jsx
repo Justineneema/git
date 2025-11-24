@@ -26,16 +26,34 @@ function useAuth() {
   }, [user])
 
   const login = async (username, password) => {
-    const { data } = await api.post('login/', { username, password })
-    const authData = { access: data.access, refresh: data.refresh, user: data.user }
+    const { data } = await api.post('auth/login/', { username, password })
+    const authData = { 
+      access: data.access, 
+      refresh: data.refresh, 
+      user: data.user 
+    }
     // Set token header immediately to avoid race on first protected fetch
     setAuthToken(authData.access)
     localStorage.setItem('auth', JSON.stringify(authData))
     setUser(authData)
+    return authData
   }
 
-  const register = async (username, password, is_expert=false) => {
-    await api.post('register/', { username, password, is_expert })
+  const register = async (username, password, is_expert = false) => {
+    const { data } = await api.post('auth/register/', { 
+      username, 
+      password, 
+      is_expert 
+    })
+    const authData = { 
+      access: data.access, 
+      refresh: data.refresh, 
+      user: data.user 
+    }
+    setAuthToken(authData.access)
+    localStorage.setItem('auth', JSON.stringify(authData))
+    setUser(authData)
+    return authData
   }
 
   const logout = () => {
@@ -74,7 +92,7 @@ export default function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage auth={auth} />} />
           <Route path="/register" element={<RegisterPage auth={auth} />} />
-          <Route path="/dashboard" element={<ProtectedAdmin auth={auth}><AdminDashboard auth={auth} /></ProtectedAdmin>} />
+          <Route path="/dashboard" element={<Protected auth={auth}><Dashboard auth={auth} /></Protected>} />
           <Route path="/upload" element={<Protected auth={auth}><UploadImage auth={auth} /></Protected>} />
           <Route path="/admin" element={<ProtectedAdmin auth={auth}><AdminDashboard auth={auth} /></ProtectedAdmin>} />
           <Route path="/history" element={<Protected auth={auth}><Dashboard auth={auth} /></Protected>} />
@@ -90,5 +108,3 @@ export default function App() {
     </div>
   )
 }
-
-
