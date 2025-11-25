@@ -96,9 +96,9 @@ export default function LoginPage({ auth }) {
           </button>
         </form>
         
-        <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-blue-700">
+        {/* <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-blue-700">
           <strong>Debug Info:</strong> API Base: {import.meta.env.VITE_API_BASE || 'https://git-4-8zex.onrender.com/api/'}
-        </div>
+        </div> */}
         
         <p className="mt-3 text-sm text-center">
           No account?{' '}

@@ -186,11 +186,11 @@ export default function RegisterPage({ auth }) {
         </div>
         
         {/* Debug info */}
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+        {/* <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
           <p className="text-xs text-blue-700">
             <strong>API Base:</strong> {import.meta.env.VITE_API_BASE || 'https://git-4-8zex.onrender.com/api'}
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
