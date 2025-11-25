@@ -49,11 +49,11 @@ export default function ResultCard({ result }) {
             </>
           ) : (
             <>
-              <p><span className="font-medium">Indwara:</span> {translation?.name_rw || name}</p>
+              <p><span className="font-medium">Indwara:</span> {typeof translation?.name_rw === 'string' ? translation.name_rw : name}</p>
               <p><span className="font-medium">Igihingwa:</span> {species}</p>
               <p><span className="font-medium">Icyizere:</span> {confidence}</p>
-              <p className="mt-2"><span className="font-medium">Inama y'Ubuvuzi:</span> {translation?.treatment_rw || recommendation}</p>
-              {translation?.care_tips_rw && (
+              <p className="mt-2"><span className="font-medium">Inama y'Ubuvuzi:</span> {typeof translation?.treatment_rw === 'string' ? translation.treatment_rw : recommendation}</p>
+              {translation?.care_tips_rw && typeof translation.care_tips_rw === 'string' && (
                 <div className="mt-3">
                   <div className="font-medium text-forest">Inama z'Itabwaho</div>
                   <p className="text-sm text-gray-700 mt-1">{translation.care_tips_rw}</p>

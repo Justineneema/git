@@ -10,7 +10,6 @@ export default function UploadImage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState(null)
-  const [translated, setTranslated] = useState(null)
 
   // camera activation
   useEffect(() => {
@@ -48,7 +47,6 @@ export default function UploadImage() {
     setLoading(true)
     setError('')
     setResult(null)
-    setTranslated(null)
 
     try {
       const form = new FormData()
@@ -60,10 +58,6 @@ export default function UploadImage() {
       // Check if detection was successful
       if (data.status === 'success' && data.predicted_disease) {
         setResult(data)
-        // Use translation from backend
-        if (data.translation) {
-          setTranslated(data.translation)
-        }
       } else if (data.status === 'error') {
         setError(data.message || 'Detection failed')
       } else {
@@ -117,17 +111,11 @@ export default function UploadImage() {
         </form>
       </div>
 
-      <div className="mt-6 grid md:grid-cols-2 gap-4">
+      <div className="mt-6">
         {result && (
           <div className="p-4 border rounded-lg bg-white shadow-sm">
-            <h3 className="font-bold text-lg mb-2 text-forest">English Result</h3>
+            <h3 className="font-bold text-lg mb-2 text-forest">Detection Result</h3>
             <ResultCard result={result} />
-          </div>
-        )}
-        {translated && (
-          <div className="p-4 border rounded-lg bg-white shadow-sm">
-            <h3 className="font-bold text-lg mb-2 text-forest">Ibisubizo mu Kinyarwanda</h3>
-            <p className="text-gray-800 whitespace-pre-wrap">{translated}</p>
           </div>
         )}
       </div>
