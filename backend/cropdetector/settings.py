@@ -53,9 +53,8 @@ INSTALLED_APPS = [
     "api",
 ]
 
-# =====================================================
 # MIDDLEWARE - CORS MUST BE FIRST 
-# =====================================================
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",        # MUST BE FIRST 
     "django.middleware.security.SecurityMiddleware",
@@ -90,9 +89,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "cropdetector.wsgi.application"
 
-# =====================================================
 # DATABASE CONFIGURATION
-# =====================================================
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL:
     DATABASES = {
