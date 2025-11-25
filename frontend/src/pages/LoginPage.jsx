@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { authAPI } from '../api/auth';
 
-export default function LoginPage() {
+export default function LoginPage({ auth }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,13 +23,10 @@ export default function LoginPage() {
     
     try {
       console.log('Starting login process...');
-      await authAPI.login(username, password);
+      await auth.login(username, password);
       
-      // Get redirect path or default to dashboard
-      const redirectPath = location.state?.from?.pathname || '/dashboard';
-      console.log('Login successful, redirecting to:', redirectPath);
-      
-      navigate(redirectPath, { replace: true });
+      // Redirect to dashboard after successful login
+      navigate('/dashboard', { replace: true });
     } catch (err) {
       console.error('Login page error:', err);
       
