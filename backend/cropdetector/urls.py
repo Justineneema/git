@@ -8,6 +8,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
 from django.db import connection
+from django.views.generic.base import RedirectView
 
 
 def health_check(request):
@@ -54,6 +55,9 @@ def root_view(request):
 urlpatterns = [
     # Root endpoint
     path('', root_view, name='root'),
+    
+    # Favicon (prevent 404 errors)
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico', permanent=False)),
     
     # Health check endpoint (for Render)
     path('health/', health_check, name='health_check'),
