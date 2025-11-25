@@ -160,6 +160,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:3000",
     "https://git-git-main-justine-neemas-projects.vercel.app",
+    "https://*.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -189,6 +190,7 @@ CORS_ALLOW_HEADERS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://git-4-8zex.onrender.com",
     "https://git-git-main-justine-neemas-projects.vercel.app",
+    "https://*.vercel.app",
 ]
 
 # =====================================================
