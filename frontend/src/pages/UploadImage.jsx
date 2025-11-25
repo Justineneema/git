@@ -55,8 +55,11 @@ export default function UploadImage() {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       
+      console.log('AI Detection Response:', data)
+      
       // Check if detection was successful
       if (data.error) {
+        console.log('Error from backend:', data.error)
         setError(data.error)
       } else if (data.status === 'success' && data.predicted_disease) {
         setResult(data)
@@ -67,8 +70,8 @@ export default function UploadImage() {
       }
     } catch (e) {
       const msg = e?.response?.data?.error || e?.message || 'Detection failed. Please check your internet connection.'
+      console.error('Detection error details:', e)
       setError(msg)
-      console.error('Detection error:', e)
     } finally {
       setLoading(false)
     }

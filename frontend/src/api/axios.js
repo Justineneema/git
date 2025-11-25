@@ -63,6 +63,12 @@ api.interceptors.response.use(
       localStorage.removeItem('auth_token');
       delete api.defaults.headers.common['Authorization'];
       window.location.href = '/login';
+      return Promise.reject(error);
+    }
+    
+    // For other errors (400, 500, etc), return the response so it can be handled in the component
+    if (error.response) {
+      return error.response;
     }
     
     return Promise.reject(error);
