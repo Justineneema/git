@@ -31,9 +31,15 @@ class RegisterView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         username = request.data.get("username")
-        email = request.data.get("email")
+        email = request.data.get("email", "")
 
         # Check for duplicates
+        if not username:
+            return Response(
+                {"error": "Username is required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         if User.objects.filter(username=username).exists():
             return Response(
                 {"error": "Username already exists. Please log in instead."},

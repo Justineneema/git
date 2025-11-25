@@ -56,9 +56,6 @@ urlpatterns = [
     # Root endpoint
     path('', root_view, name='root'),
     
-    # Favicon (prevent 404 errors)
-    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico', permanent=False)),
-    
     # Health check endpoint (for Render)
     path('health/', health_check, name='health_check'),
     
