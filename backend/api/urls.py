@@ -12,7 +12,7 @@ urlpatterns = [
     path('auth/login/', views.LoginView.as_view(), name='login'),
     
     # AI Detection endpoint
-    path('detect/', views.ai_detect, name='ai_detect'),
+    path('ai-detect/', views.ai_detect, name='ai_detect'),
     
     # Include router URLs
     path('', include(router.urls)),
