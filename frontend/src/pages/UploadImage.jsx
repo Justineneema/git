@@ -56,7 +56,9 @@ export default function UploadImage() {
       })
       
       // Check if detection was successful
-      if (data.status === 'success' && data.predicted_disease) {
+      if (data.error) {
+        setError(data.error)
+      } else if (data.status === 'success' && data.predicted_disease) {
         setResult(data)
       } else if (data.status === 'error') {
         setError(data.message || 'Detection failed')
