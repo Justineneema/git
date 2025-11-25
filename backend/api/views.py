@@ -104,8 +104,8 @@ class DetectionHistoryViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user.is_staff or getattr(user, 'is_expert', False):
-            return DetectionHistory.objects.all().order_by('-created_at')
-        return DetectionHistory.objects.filter(user=user).order_by('-created_at')
+            return DetectionHistory.objects.all().order_by('-detected_at')
+        return DetectionHistory.objects.filter(user=user).order_by('-detected_at')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -209,7 +209,7 @@ def ai_detect(request):
             confidence=confidence
         )
         result['detection_id'] = detection.id
-        result['created_at'] = detection.created_at
+        result['detected_at'] = detection.detected_at
 
     except Exception as e:
         print(f"History save error: {e}")
