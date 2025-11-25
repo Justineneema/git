@@ -56,19 +56,23 @@ export default function UploadImage() {
       const { data } = await api.post('ai-detect/', form, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
-      setResult(data)
-
-      // Combine disease + treatment + analysis text to translate
-      const fullText = `
-        Disease: ${data.disease || 'Unknown'}
-        Treatment: ${data.treatment || ''}
-        Analysis: ${data.analysis || ''}
-      `
-      const translationRes = await api.post('translate/', { text: fullText, target_lang: 'rw' })
-      setTranslated(translationRes.data.translated_text)
+      
+      // Check if detection was successful
+      if (data.status === 'success' && data.predicted_disease) {
+        setResult(data)
+        // Use translation from backend
+        if (data.translation) {
+          setTranslated(data.translation)
+        }
+      } else if (data.status === 'error') {
+        setError(data.message || 'Detection failed')
+      } else {
+        setError('No disease detected. Please try again with a different image.')
+      }
     } catch (e) {
-      const msg = e?.response?.data?.error || 'Detection Completed'
+      const msg = e?.response?.data?.error || e?.message || 'Detection failed. Please check your internet connection.'
       setError(msg)
+      console.error('Detection error:', e)
     } finally {
       setLoading(false)
     }

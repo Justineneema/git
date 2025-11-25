@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import healthyimage from '../assets/Healthy.jpeg';
-import { translateToKinyarwanda } from '../assets/kinyarwanda.js';
 
 export default function ResultCard({ result }) {
   const [showKinyarwanda, setShowKinyarwanda] = useState(false)
@@ -13,12 +12,6 @@ export default function ResultCard({ result }) {
   const healthy = result?.healthy_example
   const tips = (result?.care_tips || '').split(/\n|\.\s/).filter(Boolean)
   const translation = result?.translation || {}
-
-  // Example usage for Kinyarwanda translation:
-  const kinyarwandaName = translateToKinyarwanda(result?.predicted_disease?.name);
-  const kinyarwandaDescription = translateToKinyarwanda(result?.predicted_disease?.description);
-  const kinyarwandaTreatment = translateToKinyarwanda(result?.predicted_disease?.treatment);
-  const kinyarwandaCareTips = translateToKinyarwanda(result?.predicted_disease?.care_tips);
 
   return (
     <div className="card">
@@ -56,11 +49,11 @@ export default function ResultCard({ result }) {
             </>
           ) : (
             <>
-              <p><span className="font-medium">Indwara:</span> {translation.name_rw || 'Ntibisobanuye'}</p>
+              <p><span className="font-medium">Indwara:</span> {translation?.name_rw || name}</p>
               <p><span className="font-medium">Igihingwa:</span> {species}</p>
               <p><span className="font-medium">Icyizere:</span> {confidence}</p>
-              <p className="mt-2"><span className="font-medium">Inama y’Ubuvuzi:</span> {translation.treatment_rw || 'Nta nama ihari'}</p>
-              {translation.care_tips_rw && (
+              <p className="mt-2"><span className="font-medium">Inama y'Ubuvuzi:</span> {translation?.treatment_rw || recommendation}</p>
+              {translation?.care_tips_rw && (
                 <div className="mt-3">
                   <div className="font-medium text-forest">Inama z'Itabwaho</div>
                   <p className="text-sm text-gray-700 mt-1">{translation.care_tips_rw}</p>
