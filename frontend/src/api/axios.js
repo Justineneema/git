@@ -4,7 +4,7 @@ import axios from 'axios';
 // For Vercel: Set VITE_API_BASE environment variable to your Render backend URL
 const baseURL = import.meta.env.VITE_API_BASE || 'https://git-4-8zex.onrender.com/api';
 
-console.log('🔧 API Base URL:', baseURL);
+console.log('API Base URL:', baseURL);
 
 export const api = axios.create({
   baseURL,
@@ -41,11 +41,11 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     
-    console.log(`📤 Making ${config.method?.toUpperCase()} request to: ${config.baseURL}${config.url}`);
+    console.log(` Making ${config.method?.toUpperCase()} request to: ${config.baseURL}${config.url}`);
     return config;
   },
   (error) => {
-    console.error('❌ Request error:', error);
+    console.error(' Request error:', error);
     return Promise.reject(error);
   }
 );
@@ -53,11 +53,12 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
   (response) => {
-    console.log(`✅ Response received:`, response.status);
+    console.log(` Response received:`, response.status, response.data);
     return response;
   },
   (error) => {
-    console.error('❌ Response error:', error.response?.status, error.message);
+    console.error(' Response error:', error.response?.status, error.message);
+    console.error(' Response data:', error.response?.data);
     
     if (error.response?.status === 401) {
       localStorage.removeItem('auth_token');
@@ -68,6 +69,7 @@ api.interceptors.response.use(
     
     // For other errors (400, 500, etc), return the response so it can be handled in the component
     if (error.response) {
+      console.log(' Returning error response:', error.response.status, error.response.data);
       return error.response;
     }
     

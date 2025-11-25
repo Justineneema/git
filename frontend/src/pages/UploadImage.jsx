@@ -51,26 +51,32 @@ export default function UploadImage() {
     try {
       const form = new FormData()
       form.append('image', file)
-      const { data } = await api.post('ai-detect/', form, {
+      console.log(' Sending image to backend...')
+      const response = await api.post('ai-detect/', form, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       
-      console.log('AI Detection Response:', data)
+      const { data, status } = response
+      console.log(' Full Response - Status:', status, 'Data:', data)
       
       // Check if detection was successful
       if (data.error) {
-        console.log('Error from backend:', data.error)
+        console.log(' Backend error found:', data.error)
         setError(data.error)
       } else if (data.status === 'success' && data.predicted_disease) {
+        console.log(' Detection successful')
         setResult(data)
       } else if (data.status === 'error') {
+        console.log(' Detection status error:', data.message)
         setError(data.message || 'Detection failed')
       } else {
+        console.log(' No disease detected')
         setError('No disease detected. Please try again with a different image.')
       }
     } catch (e) {
       const msg = e?.response?.data?.error || e?.message || 'Detection failed. Please check your internet connection.'
-      console.error('Detection error details:', e)
+      console.error(' Catch block - Detection error:', e)
+      console.error(' Error message:', msg)
       setError(msg)
     } finally {
       setLoading(false)
@@ -106,7 +112,9 @@ export default function UploadImage() {
                 <img className="rounded-lg object-cover w-full max-h-64 border" src={URL.createObjectURL(file)} alt="Preview" />
               )}
               {error && (
-                <div className={error === 'Detection Completed' ? 'text-green-600 text-sm' : 'text-red-600 text-sm'}>{error}</div>
+                <div className="p-3 rounded-lg bg-red-50 border border-red-200">
+                  <p className="text-red-700 text-sm font-medium">❌ {error}</p>
+                </div>
               )}
               <button className="btn-primary" disabled={loading || !file}>
                 {loading ? 'Detecting...' : 'Run Detection'}
