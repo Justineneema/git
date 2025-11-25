@@ -47,7 +47,13 @@ export const authAPI = {
       console.log('Registration successful for user:', user.username);
       return response.data;
     } catch (error) {
-      console.error('Registration error:', error.response?.data || error.message);
+      console.error('Registration error details:', {
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        message: error.message,
+        code: error.code
+      });
       throw error;
     }
   },

@@ -8,10 +8,9 @@ console.log('🔧 API Base URL:', baseURL);
 
 export const api = axios.create({
   baseURL,
-  timeout: 30000,
+  timeout: 60000, // Increased from 30000 to 60000ms for slow backend startup
   headers: { 
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
   },
   withCredentials: true,
 });
@@ -35,9 +34,7 @@ if (token) {
 // Request interceptor
 api.interceptors.request.use(
   (config) => {
-    if (config.url && !config.url.startsWith('/')) {
-      config.url = '/' + config.url;
-    }
+    // Don't add leading slash - baseURL already includes /api
     
     const token = localStorage.getItem('auth_token');
     if (token) {

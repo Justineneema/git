@@ -50,13 +50,21 @@ export default function RegisterPage({ auth }) {
       // Extract user-friendly error message
       let errorMessage = 'Registration failed. Please try again.';
       
-      if (err.message && err.message !== 'Registration failed') {
-        errorMessage = err.message;
+      // Check for timeout
+      if (err.code === 'ECONNABORTED' || err.message?.includes('timeout')) {
+        errorMessage = 'Request timeout. The server may be starting up. Please try again.';
+      } else if (err.response?.status === 404) {
+        errorMessage = 'Registration endpoint not found. Please contact support.';
+      } else if (err.response?.status === 500) {
+        errorMessage = 'Server error. Please try again later.';
       } else if (err.response?.data?.error) {
         errorMessage = err.response.data.error;
       } else if (err.response?.data?.username) {
         const usernameError = err.response.data.username;
         errorMessage = Array.isArray(usernameError) ? usernameError[0] : usernameError;
+      } else if (err.response?.data?.password) {
+        const passwordError = err.response.data.password;
+        errorMessage = Array.isArray(passwordError) ? passwordError[0] : passwordError;
       } else if (err.response?.data?.email) {
         const emailError = err.response.data.email;
         errorMessage = Array.isArray(emailError) ? emailError[0] : emailError;
@@ -75,6 +83,8 @@ export default function RegisterPage({ auth }) {
             }
           }
         }
+      } else if (err.message) {
+        errorMessage = err.message;
       }
       
       setError(errorMessage);
