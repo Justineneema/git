@@ -53,26 +53,31 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
   (response) => {
-    console.log(` Response received:`, response.status, response.data);
+    console.log(`✅ Response received: Status ${response.status}`, response.data);
     return response;
   },
   (error) => {
-    console.error(' Response error:', error.response?.status, error.message);
-    console.error(' Response data:', error.response?.data);
+    console.error(`❌ Response error: Status ${error.response?.status}`, error.message);
+    console.error('❌ Response data:', error.response?.data);
     
+    // Handle 401 Unauthorized
     if (error.response?.status === 401) {
+      console.warn('⚠️ 401 Unauthorized - Redirecting to login');
       localStorage.removeItem('auth_token');
       delete api.defaults.headers.common['Authorization'];
       window.location.href = '/login';
       return Promise.reject(error);
     }
     
-    // For other errors (400, 500, etc), return the response so it can be handled in the component
+    // For 4xx and 5xx errors (except 401), return the response object
+    // This allows the component to handle error messages from the backend
     if (error.response) {
-      console.log(' Returning error response:', error.response.status, error.response.data);
-      return error.response;
+      console.log(`📋 Returning error response: Status ${error.response.status}`, error.response.data);
+      return Promise.resolve(error.response);
     }
     
+    // Network error or other issue
+    console.error('❌ Network error or no response');
     return Promise.reject(error);
   }
 );

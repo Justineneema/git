@@ -51,32 +51,39 @@ export default function UploadImage() {
     try {
       const form = new FormData()
       form.append('image', file)
-      console.log(' Sending image to backend...')
+      console.log('📤 Sending image to backend...')
+      
       const response = await api.post('ai-detect/', form, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       
-      const { data, status } = response
-      console.log(' Full Response - Status:', status, 'Data:', data)
+      console.log('📥 Response received')
+      console.log('📥 Status:', response.status)
+      console.log('📥 Data:', response.data)
       
-      // Check if detection was successful
-      if (data.error) {
-        console.log(' Backend error found:', data.error)
+      // Check for error response from backend (status 400, 500, etc)
+      if (response.status >= 400) {
+        console.log('⚠️ Backend error:', response.status, response.data?.error)
+        setError(response.data?.error || 'An error occurred. Please try again.')
+        return
+      }
+      
+      // Handle success response (status 200)
+      const data = response.data
+      if (data?.error) {
+        console.log('⚠️ Error in response data:', data.error)
         setError(data.error)
-      } else if (data.status === 'success' && data.predicted_disease) {
-        console.log(' Detection successful')
+      } else if (data?.status === 'success' && data?.predicted_disease) {
+        console.log('✅ Detection successful')
         setResult(data)
-      } else if (data.status === 'error') {
-        console.log(' Detection status error:', data.message)
-        setError(data.message || 'Detection failed')
       } else {
-        console.log(' No disease detected')
+        console.log('⚠️ Unexpected response')
         setError('No disease detected. Please try again with a different image.')
       }
     } catch (e) {
+      console.error('❌ Catch block triggered - Error:', e)
       const msg = e?.response?.data?.error || e?.message || 'Detection failed. Please check your internet connection.'
-      console.error(' Catch block - Detection error:', e)
-      console.error(' Error message:', msg)
+      console.error('❌ Error message:', msg)
       setError(msg)
     } finally {
       setLoading(false)
