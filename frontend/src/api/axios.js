@@ -69,11 +69,12 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
     
-    // For 4xx and 5xx errors (except 401), return the response object
+    // For 4xx and 5xx errors (except 401), throw with response data
     // This allows the component to handle error messages from the backend
     if (error.response) {
-      console.log(`📋 Returning error response: Status ${error.response.status}`, error.response.data);
-      return Promise.resolve(error.response);
+      console.log(`📋 Error response: Status ${error.response.status}`, error.response.data);
+      // Re-throw but axios will still have the response attached
+      throw error;
     }
     
     // Network error or other issue

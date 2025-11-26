@@ -51,40 +51,27 @@ export default function UploadImage() {
     try {
       const form = new FormData()
       form.append('image', file)
-      console.log('📤 Sending image to backend...')
       
       const response = await api.post('ai-detect/', form, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       
-      console.log('📥 Response received')
-      console.log('📥 Status:', response.status)
-      console.log('📥 Data:', response.data)
-      
-      // Check for error response from backend (status 400, 500, etc)
-      if (response.status >= 400) {
-        console.log('⚠️ Backend error:', response.status, response.data?.error)
-        setError(response.data?.error || 'An error occurred. Please try again.')
-        return
-      }
-      
-      // Handle success response (status 200)
+      // Success response (status 200)
       const data = response.data
-      if (data?.error) {
-        console.log('⚠️ Error in response data:', data.error)
-        setError(data.error)
-      } else if (data?.status === 'success' && data?.predicted_disease) {
-        console.log('✅ Detection successful')
+      if (data?.status === 'success' && data?.predicted_disease) {
         setResult(data)
       } else {
-        console.log('⚠️ Unexpected response')
         setError('No disease detected. Please try again with a different image.')
       }
     } catch (e) {
-      console.error('❌ Catch block triggered - Error:', e)
-      const msg = e?.response?.data?.error || e?.message || 'Detection failed. Please check your internet connection.'
-      console.error('❌ Error message:', msg)
-      setError(msg)
+      // Handle both errors and error responses
+      if (e?.response?.data?.error) {
+        setError(e.response.data.error)
+      } else if (e?.message) {
+        setError(e.message)
+      } else {
+        setError('Detection failed. Please check your internet connection.')
+      }
     } finally {
       setLoading(false)
     }
