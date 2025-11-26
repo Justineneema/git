@@ -26,8 +26,8 @@ export default function UploadImage() {
       const form = new FormData()
       form.append('image', file)
       
-      console.log('📤 Sending image to backend...')
-      setDebugInfo('📤 Sending to backend...')
+      console.log('Sending image to backend...')
+      setDebugInfo(' Sending to backend...')
       
       const response = await api.post('ai-detect/', form, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -38,28 +38,28 @@ export default function UploadImage() {
       
       const { data, status } = response
       
-      console.log('📥 Status:', status)
-      console.log('📥 Data:', data)
-      console.log('📥 Data keys:', Object.keys(data || {}))
+      console.log(' Status:', status)
+      console.log(' Data:', data)
+      console.log(' Data keys:', Object.keys(data || {}))
       
       setDebugInfo(`Status: ${status}, Has error field: ${'error' in (data || {})}`)
       
       // Check if detection was successful
       if (data?.error) {
-        console.log('⚠️ Backend error found:', data.error)
+        console.log(' Backend error found:', data.error)
         setError(data.error)
-        setDebugInfo(`✅ Error detected: ${data.error}`)
+        setDebugInfo(`Error detected: ${data.error}`)
       } else if (data?.status === 'success' && data?.predicted_disease) {
-        console.log('✅ Detection successful')
+        console.log(' Detection successful')
         setResult(data)
-        setDebugInfo('✅ Detection successful')
+        setDebugInfo('Detection successful')
       } else {
-        console.log('⚠️ Unexpected response structure')
+        console.log(' Unexpected response structure')
         setDebugInfo(`Unexpected response: ${JSON.stringify(data).substring(0, 100)}`)
         setError('Unexpected response from server')
       }
     } catch (e) {
-      console.error('❌ Catch block triggered')
+      console.error(' Catch block triggered')
       console.error('Error object:', e)
       console.error('Error response:', e?.response)
       console.error('Error response data:', e?.response?.data)
@@ -95,7 +95,7 @@ export default function UploadImage() {
               )}
               {error && (
                 <div className="p-3 rounded-lg bg-red-50 border border-red-200">
-                  <p className="text-red-700 text-sm font-medium">❌ {error}</p>
+                  <p className="text-red-700 text-sm font-medium"> {error}</p>
                 </div>
               )}
               <button className="btn-primary" disabled={loading || !file}>

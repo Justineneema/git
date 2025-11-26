@@ -11,7 +11,7 @@ export default function Navbar({ auth }) {
       <div className="container mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <div className="h-8 w-8 rounded bg-forest"></div>
-          <span className="font-semibold text-forest">AI Crop Doctor</span>
+          <span className="font-semibold text-forest">AI Crop Disease Doctor</span>
         </Link>
         <nav className="flex items-center gap-4">
           {user ? (
@@ -45,5 +45,3 @@ export default function Navbar({ auth }) {
     </header>
   )
 }
-
-
