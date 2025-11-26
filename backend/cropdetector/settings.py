@@ -10,9 +10,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# =====================================================
 # SECURITY & ENV VARIABLES
-# =====================================================
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-secret-key-change-in-production")
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
@@ -32,9 +30,7 @@ RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# =====================================================
 # APPLICATIONS
-# =====================================================
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -56,9 +52,9 @@ INSTALLED_APPS = [
 # MIDDLEWARE - CORS MUST BE FIRST 
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",        # MUST BE FIRST 
+    "corsheaders.middleware.CorsMiddleware",        
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",   # For static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",   
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -67,9 +63,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# =====================================================
 # URLS & WSGI
-# =====================================================
 ROOT_URLCONF = "cropdetector.urls"
 
 TEMPLATES = [
@@ -108,9 +102,7 @@ else:
         }
     }
 
-# =====================================================
 # PASSWORD VALIDATION
-# =====================================================
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -118,22 +110,19 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# =====================================================
 # AUTH MODEL
-# =====================================================
 AUTH_USER_MODEL = "api.User"
 
-# =====================================================
 # INTERNATIONALIZATION
-# =====================================================
+
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# =====================================================
+
 # STATIC & MEDIA FILES
-# =====================================================
+
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
@@ -149,9 +138,9 @@ STORAGES = {
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# =====================================================
+
 # CORS CONFIGURATION - UPDATED WITH YOUR ACTUAL URLS 
-# =====================================================
+
 CORS_ALLOW_ALL_ORIGINS = False
 
 # List all allowed frontend origins - wildcards don't work in Django CORS
@@ -161,7 +150,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://127.0.0.1:3000",
     "https://git-git-main-justine-neemas-projects.vercel.app",
-    "https://git-seven-rouge.vercel.app",  # Your actual frontend URL
+    "https://git-seven-rouge.vercel.app",  
     "https://git-frontend.vercel.app",
 ]
 
@@ -195,9 +184,9 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
 ]
 
-# =====================================================
+
 # REST FRAMEWORK CONFIGURATION
-# =====================================================
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -212,9 +201,8 @@ REST_FRAMEWORK = {
     ],
 }
 
-# =====================================================
 # JWT CONFIGURATION
-# =====================================================
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -226,9 +214,9 @@ SIMPLE_JWT = {
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
 }
 
-# =====================================================
+
 # SECURITY SETTINGS FOR PRODUCTION
-# =====================================================
+
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
@@ -240,9 +228,9 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     X_FRAME_OPTIONS = "DENY"
 
-# =====================================================
+
 # DEFAULT PRIMARY KEY TYPE
-# =====================================================
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # LOGGING CONFIGURATION

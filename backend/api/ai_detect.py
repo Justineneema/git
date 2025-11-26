@@ -30,8 +30,8 @@ def ai_detect(request):
         if green_score < 5.0:
             return Response({"error": "Please upload a valid crop image"}, status=400)
         img.seek(0)
-    except Exception:
-        return Response({"error": "Invalid image format"}, status=400)
+    except Exception as e:
+        return Response({"error": f"Invalid image format: {str(e)}"}, status=400)
 
     # --- Mock AI logic (load default diseases if empty) ---
     diseases = Disease.objects.all()
@@ -44,7 +44,7 @@ def ai_detect(request):
                 'treatment': 'Rogue infected plants, sanitize tools, use clean planting material.',
                 'care_tips': 'Maintain field hygiene; use resistant varieties; avoid tool sharing between fields.'
             },
-            
+            {
                 'name': 'Maize Leaf Blight',
                 'species': 'Maize',
                 'description': 'Fungal leaf spots reducing photosynthesis.',
@@ -76,7 +76,7 @@ def ai_detect(request):
         confidence = round(random.uniform(0.7, 0.99), 2)
         disease_data = DiseaseSerializer(disease).data
 
-        # 🟢 Translate with fallback
+        #  Translate with fallback
         def safe_translate(text):
             try:
                 return translator.translate(text, src='en', dest='rw').text
@@ -102,10 +102,7 @@ def ai_detect(request):
 
     except Exception as e:
         print("Detection error:", e)
-        result = {
-            'status': 'success',
-            'message': 'Detection completed.'
-        }
+        return Response({"error": "Detection failed. Please try again."}, status=500)
 
     # --- Save history ---
     detection = DetectionHistory.objects.create(

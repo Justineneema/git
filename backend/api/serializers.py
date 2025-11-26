@@ -36,7 +36,18 @@ class DiseaseSerializer(serializers.ModelSerializer):
 class DetectionHistorySerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     predicted_disease = DiseaseSerializer(read_only=True)
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = DetectionHistory
         fields = '__all__'
+    
+    def get_image(self, obj):
+        """Return full image URL"""
+        if obj.image:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.image.url)
+            # Fallback if no request context
+            return f"/media/{obj.image.name}"
+        return None
