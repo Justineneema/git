@@ -4,9 +4,12 @@ An intelligent web platform powered by **Artificial Intelligence** to detect cro
 
 ---
 
+##  Demo Video
+**Watch here:**  https://www.youtube.com/watch?v=pu_mLWLz-ZQ
+
 ##  **Overview**
-The **AI Crop Disease Detector** uses advanced machine learning to diagnose plant diseases through image uploads.  
-It provides instant results, treatment guidance, appointment booking, and expert validation — all in one easy-to-use web app.  
+- The **AI Crop Disease Detector** uses advanced machine learning to diagnose plant diseases through image uploads.  
+- It provides instant results, treatment guidance, appointment booking, and expert validation — all in one easy-to-use web app.  
 
 ---
 
@@ -15,7 +18,7 @@ It provides instant results, treatment guidance, appointment booking, and expert
  **Role-Based Access** — Farmers, Experts, Agro-dealers, and Admins.  
  **Smart Treatment Advice** — Step-by-step recovery instructions.  
  **Admin Dashboard** — Manage users, monitor reports, and update models.    
- **Appointment Booking** — Connect with agro-dealers or field experts.  
+ **phone call** — Connect with agro-dealers or field experts.  
  **Expert Validation** — Professionals can verify or adjust AI predictions.  
 
 ---
@@ -34,7 +37,7 @@ It provides instant results, treatment guidance, appointment booking, and expert
 -  **TensorFlow** — AI model integration  
 - **Pillow** — Image processing  
 -  **JWT Auth** — Secure login system  
-- **SQLite / PostgreSQL** — Database layer  
+- **PostgreSQL** — Database layer  
 
 ---
 
@@ -44,6 +47,8 @@ It provides instant results, treatment guidance, appointment booking, and expert
 ```bash
 git clone https://github.com/justineneema/crop-disease-detector.git
 cd crop-disease-detector
+cd frontend
+cd backend
 ```
 
 ### 2️2 Install Dependencies
@@ -65,6 +70,11 @@ npm run dev
 
 # Backend
 cd backend
+python3 -m venv venv
+source venv/bin/activate
+for window
+venv\script\activate
+pip manage.py migrate
 python manage.py runserver
 ```
 
@@ -91,19 +101,19 @@ python manage.py runserver
 ### 4 Requirements
 Functional
 
- Image upload and AI detection
- Treatment recommendation
- Role-based access control
- Appointment scheduling
- Historical records & reporting
+ - Image upload and AI detection
+ - Treatment recommendation
+ - Role-based access control
+ - Appointment scheduling on call
+ - Historical records & reporting
+ - admin management
 
 ## **Non-Functional**
 
- JWT-based security
-Fast AI processing (<10s per image)
- Mobile-friendly, bilingual UI
- Scalable architecture
- 95% uptime reliability
+ - JWT-based security
+ - Fast AI processing (<10s perimage)
+ - Mobile-friendly, bilingual UI
+- Scalable architecture 95% uptime  - reliability
 
 
 

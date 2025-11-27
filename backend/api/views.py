@@ -122,27 +122,27 @@ class DetectionHistoryViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.IsAuthenticated])
 @parser_classes([MultiPartParser, FormParser])
 def ai_detect(request):
-    print("🔍 AI_DETECT endpoint called")
+    print(" AI_DETECT endpoint called")
     img = request.FILES.get('image')
     if not img:
-        print("❌ No image provided")
+        print(" No image provided")
         return Response({"error": "Image is required"}, status=400)
 
-    print(f"📁 Image received: {img.name}, Size: {img.size} bytes")
+    print(f" Image received: {img.name}, Size: {img.size} bytes")
 
     # Validate image
     try:
-        print("🖼️ Attempting to open image...")
+        print(" Attempting to open image...")
         image = Image.open(img).convert('RGB')
-        print(f"✅ Image opened successfully. Dimensions: {image.size}")
+        print(f" Image opened successfully. Dimensions: {image.size}")
         # Basic image validation
         if image.size[0] < 50 or image.size[1] < 50:
-            print(f"❌ Image too small: {image.size}")
+            print(f" Image too small: {image.size}")
             return Response({"error": "Image too small"}, status=400)
         img.seek(0)  # Reset file pointer
-        print("✅ Image validation passed")
+        print(" Image validation passed")
     except Exception as e:
-        print(f"❌ Image validation failed: {str(e)}")
+        print(f" Image validation failed: {str(e)}")
         return Response({"error": f"Invalid image format: {str(e)}"}, status=400)
 
     # Seed default diseases if empty
@@ -230,5 +230,5 @@ def ai_detect(request):
         print(f"History save error: {e}")
         # Continue even if history save fails
 
-    print(f"✅ Returning success response with disease: {disease.name}")
+    print(f" Returning success response with disease: {disease.name}")
     return Response(result)
