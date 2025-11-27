@@ -2,7 +2,6 @@
 
 An intelligent web platform powered by **Artificial Intelligence** to detect crop diseases from images and recommend treatments — built for farmers, experts, and agro-dealers to make agriculture smarter and healthier.  
 
----
 
 ##  Demo Video
 **Watch here:**  https://www.youtube.com/watch?v=pu_mLWLz-ZQ
@@ -11,7 +10,6 @@ An intelligent web platform powered by **Artificial Intelligence** to detect cro
 - The **AI Crop Disease Detector** uses advanced machine learning to diagnose plant diseases through image uploads.  
 - It provides instant results, treatment guidance, appointment booking, and expert validation — all in one easy-to-use web app.  
 
----
 
 ##  **Key Features**
  **AI Disease Detection** — Upload crop photos and get real-time diagnosis.  
@@ -21,7 +19,6 @@ An intelligent web platform powered by **Artificial Intelligence** to detect cro
  **phone call** — Connect with agro-dealers or field experts.  
  **Expert Validation** — Professionals can verify or adjust AI predictions.  
 
----
 
 ##  **Tech Stack**
 
@@ -33,11 +30,11 @@ An intelligent web platform powered by **Artificial Intelligence** to detect cro
 -  **Framer Motion** — Beautiful animations  
 
 ###  Backend
--  **Django 5.2** + **Django REST Framework** — API logic  
--  **TensorFlow** — AI model integration  
-- **Pillow** — Image processing  
--  **JWT Auth** — Secure login system  
-- **PostgreSQL** — Database layer  
+-  **Django 5.2** + **Django REST Framework** - API logic  
+-  **TensorFlow** - AI model integration  
+- **Pillow** - Image processing  
+-  **JWT Auth** - Secure login system  
+- **PostgreSQL** - Database layer  
 
 ---
 
@@ -66,6 +63,7 @@ pip install -r requirements.txt
 ```bash
 # Frontend
 cd frontend
+npm install
 npm run dev
 
 # Backend
@@ -119,4 +117,5 @@ Functional
 
 
 ##  **License**
+Done by **Justine Neema**
 This project is licensed under the MIT License.  
