@@ -1,10 +1,30 @@
 #  **AI Crop Disease Detector**
 
-An intelligent web platform powered by **Artificial Intelligence** to detect crop diseases from images and recommend treatments — built for farmers, experts, and agro-dealers to make agriculture smarter and healthier.  
+The AI-Powered Crop Disease Detector is a tool that helps farmers quickly identify diseases on their crops just by taking a picture. Once a farmer uploads a photo, the system analyzes it and gives a clear diagnosis, shows how serious the disease is, and suggests practical solutions they can use. It also helps farmers find nearby agro-dealers or experts and keeps a record of all previous scans. The goal is to make it easier for farmers to protect their crops, reduce losses, and improve their harvests using easy, accessible technology.
+ 
 
 
 ##  Demo Video
 **Watch here:**  https://www.youtube.com/watch?v=pu_mLWLz-ZQ
+
+##  **Project Structure**
+```
+ crop-disease-detector/
+├──  backend/
+│   ├── api/ (models, views, serializers)
+│   ├── cropdetector/ (settings, urls, ai_model.py)
+│   ├── media/
+│   └── manage.py
+│
+└──  frontend/
+    ├── src/
+    │   ├── api/axios.js
+    │   ├── components/ (Navbar, Footer, etc.)
+    │   ├── pages/ (Dashboard, Upload, Admin)
+    │   ├── App.jsx / main.jsx
+    └── package.json
+
+```
 
 ##  **Overview**
 - The **AI Crop Disease Detector** uses advanced machine learning to diagnose plant diseases through image uploads.  
@@ -78,24 +98,6 @@ python manage.py runserver
 
 ---
 
-##  **Project Structure**
-```
- crop-disease-detector/
-├──  backend/
-│   ├── api/ (models, views, serializers)
-│   ├── cropdetector/ (settings, urls, ai_model.py)
-│   ├── media/
-│   └── manage.py
-│
-└──  frontend/
-    ├── src/
-    │   ├── api/axios.js
-    │   ├── components/ (Navbar, Footer, etc.)
-    │   ├── pages/ (Dashboard, Upload, Admin)
-    │   ├── App.jsx / main.jsx
-    └── package.json
-
-```
 ### 4 Requirements
 Functional
 
@@ -114,8 +116,7 @@ Functional
 - Scalable architecture 95% uptime  - reliability
 
 
-
+Done by **Justine Neema**
 
 ##  **License**
-Done by **Justine Neema**
 This project is licensed under the MIT License.  
