@@ -26,38 +26,6 @@ The AI-Powered Crop Disease Detector is a tool that helps farmers quickly identi
 
 ```
 
-##  **Overview**
-- The **AI Crop Disease Detector** uses advanced machine learning to diagnose plant diseases through image uploads.  
-- It provides instant results, treatment guidance, appointment booking, and expert validation — all in one easy-to-use web app.  
-
-
-##  **Key Features**
- **AI Disease Detection** — Upload crop photos and get real-time diagnosis.  
- **Role-Based Access** — Farmers, Experts, Agro-dealers, and Admins.  
- **Smart Treatment Advice** — Step-by-step recovery instructions.  
- **Admin Dashboard** — Manage users, monitor reports, and update models.    
- **phone call** — Connect with agro-dealers or field experts.  
- **Expert Validation** — Professionals can verify or adjust AI predictions.  
-
-
-##  **Tech Stack**
-
-###  Frontend
--  **React 18** — UI framework  
--  **Vite** — Fast bundler & dev server  
--  **Tailwind CSS** — Modern responsive design  
--  **Axios** — API communication  
--  **Framer Motion** — Beautiful animations  
-
-###  Backend
--  **Django 5.2** + **Django REST Framework** - API logic  
--  **TensorFlow** - AI model integration  
-- **Pillow** - Image processing  
--  **JWT Auth** - Secure login system  
-- **PostgreSQL** - Database layer  
-
----
-
 ##  **Setup Instructions**
 
 ### 1️1 Clone the Repository
@@ -95,6 +63,38 @@ venv\script\activate
 pip manage.py migrate
 python manage.py runserver
 ```
+
+---
+
+##  **Overview**
+- The **AI Crop Disease Detector** uses advanced machine learning to diagnose plant diseases through image uploads.  
+- It provides instant results, treatment guidance, appointment booking, and expert validation — all in one easy-to-use web app.  
+
+
+##  **Key Features**
+ **AI Disease Detection** — Upload crop photos and get real-time diagnosis.  
+ **Role-Based Access** — Farmers, Experts, Agro-dealers, and Admins.  
+ **Smart Treatment Advice** — Step-by-step recovery instructions.  
+ **Admin Dashboard** — Manage users, monitor reports, and update models.    
+ **phone call** — Connect with agro-dealers or field experts.  
+ **Expert Validation** — Professionals can verify or adjust AI predictions.  
+
+
+##  **Tech Stack**
+
+###  Frontend
+-  **React 18** — UI framework  
+-  **Vite** — Fast bundler & dev server  
+-  **Tailwind CSS** — Modern responsive design  
+-  **Axios** — API communication  
+-  **Framer Motion** — Beautiful animations  
+
+###  Backend
+-  **Django 5.2** + **Django REST Framework** - API logic  
+-  **TensorFlow** - AI model integration  
+- **Pillow** - Image processing  
+-  **JWT Auth** - Secure login system  
+- **PostgreSQL** - Database layer  
 
 ---
 
